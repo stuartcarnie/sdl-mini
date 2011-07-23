@@ -57,6 +57,18 @@ typedef int32_t Sint32;
  */
 typedef uint32_t Uint32;
 
+/**
+ * \brief A signed 64-bit integer type.
+ * \warning On platforms without any sort of 64-bit datatype, this is equivalent to Sint32!
+ */
+typedef int64_t Sint64;
+/**
+ * \brief An unsigned 64-bit integer type.
+ * \warning On platforms without any sort of 64-bit datatype, this is equivalent to Uint32!
+ */
+typedef uint64_t Uint64;
+
+
 
 #define SDL_malloc  malloc
 #define SDL_realloc realloc

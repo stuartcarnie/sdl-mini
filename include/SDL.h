@@ -13,6 +13,7 @@
 extern "C" {
 #endif
 	
+#include "SDL_audio.h"
 #include "SDL_stdinc.h"
 #include "SDL_error.h"
 #include "SDL_events.h"
@@ -20,22 +21,11 @@ extern "C" {
 typedef struct SDL_Color {
 	unsigned r,g,b;
 } SDL_Color;
-
-typedef void (*sound_callback_t)(void *userdata, Uint8 *stream, int len);
-
-typedef struct SDL_AudioSpec {
-	int freq;
-	int format;
-	int channels;
-	int samples;
-	sound_callback_t callback;
-	void *userdata;
-} SDL_AudioSpec;
-
+    
 typedef struct tagFormat {
-	unsigned long Rmask, Gmask, Bmask;
-	unsigned short Rshift, Gshift, Bshift;
-	unsigned BytesPerPixel;
+    unsigned long Rmask, Gmask, Bmask;
+    unsigned short Rshift, Gshift, Bshift;
+    unsigned BytesPerPixel;
 } tagFormat;
 
 typedef struct SDL_Surface {
@@ -64,10 +54,6 @@ extern SDL_Surface* SDL_SetVideoMode(int, int, int, int);
 extern SDL_Surface* SDL_GetVideoSurface();
 extern void SDL_Flip(SDL_Surface*);
 extern char* SDL_GetError();
-extern int SDL_OpenAudio(SDL_AudioSpec*,void*);
-extern void SDL_CloseAudio();
-extern void SDL_PauseAudio(int);
-
 
 #define SDL_ENABLE 1
 #define SDL_DISABLE 0
@@ -76,9 +62,6 @@ extern void SDL_PauseAudio(int);
 // video init
 #define SDL_HWSURFACE 0x00000001
 #define SDL_DOUBLEBUF 0x40000000
-
-#define AUDIO_S16 0
-#define AUDIO_U8 0
 
 extern int SDL_ShowCursor(int);
 	
