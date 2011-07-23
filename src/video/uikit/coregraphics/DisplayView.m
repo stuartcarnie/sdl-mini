@@ -21,9 +21,11 @@
 #import <QuartzCore/QuartzCore.h>
 
 static DisplayView* sharedView;
+static BOOL newFrame = NO;
 
 void UpdateScreen() {
-	[sharedView performSelectorOnMainThread:@selector(updateScreen) withObject:nil waitUntilDone:NO];
+	//[sharedView performSelectorOnMainThread:@selector(updateScreen) withObject:nil waitUntilDone:NO];
+    newFrame = YES;
 }
 
 UIView* CreateCGDisplayView(int width, int height) {
@@ -32,7 +34,7 @@ UIView* CreateCGDisplayView(int width, int height) {
 
 @interface DisplayView() 
 
-- (void)updateScreen;
+- (void)drawView:(CADisplayLink *)displayLink;
 
 @end
 
@@ -59,13 +61,29 @@ CGContextRef				context;
 										displaySize.width * kBytesPerPixel, rgbColorSpace, kFormat);
 		
 		CFRelease(rgbColorSpace);
+        
+        _displayLink = [CADisplayLink displayLinkWithTarget:self selector:@selector(drawView:)];
+        _displayLink.frameInterval = 2.0;
+        [_displayLink addToRunLoop:[NSRunLoop currentRunLoop] forMode:NSDefaultRunLoopMode];
     }
     return self;
 }
 
+- (BOOL)paused {
+	return _displayLink.paused;
+}
+
+- (void)setPaused:(BOOL)value {
+	_displayLink.paused = value;
+}
+
 extern CGContextRef context;
 
-- (void)updateScreen {
+- (void)drawView:(CADisplayLink *)displayLink {
+    if (!newFrame)
+        return;
+    
+    newFrame = NO;
 	CALayer *layer = self.layer;
 	CGImageRef image = CGBitmapContextCreateImage(context);
 	layer.contents = (id)image;

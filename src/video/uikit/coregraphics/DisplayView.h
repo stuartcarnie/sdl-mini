@@ -19,11 +19,13 @@
 
 #import <UIKit/UIKit.h>
 #import "UIKitDisplayView.h"
+#import <QuartzCore/QuartzCore.h>
 
 @interface DisplayView : UIView<DisplayViewSurface> {
 	void				*_pixels;
 	BOOL				_paused;
 	DisplayEffect		_displayEffect;
+    CADisplayLink		*_displayLink;
 }
 
 - (id)initWithFrame:(CGRect)frame displaySize:(CGSize)displaySize;
