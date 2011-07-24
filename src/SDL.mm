@@ -16,8 +16,6 @@
 #import <sys/time.h>
 #include "joystick/SDL_joystick_c.h"
 
-#define USE_CG_SURFACE	0
-
 #if USE_CG_SURFACE
 #include "DisplayView.h"
 #else

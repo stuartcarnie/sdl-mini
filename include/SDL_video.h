@@ -11,6 +11,7 @@
 #define _SDL_video_h
 
 #include "SDL_stdinc.h"
+#include "SDL_Surface.h"
 
 typedef struct SDL_Window SDL_Window;
 

@@ -10,6 +10,7 @@
 #include "SDL_joystick.h"
 #include "SDL_sysjoystick.h"
 #include "SDL_joystick_c.h"
+#include "SDL_compat.h"
 #import "SDLUIAccelerationDelegate.h"
 #import "iControlPadReaderView.h"
 #import "iCadeReaderView.h"
@@ -75,7 +76,8 @@ SDL_SYS_JoystickOpen(SDL_Joystick * joystick)
         joystick->name = iControlPadName;
         joystick->hwdata = (joystick_hwdata *)SDL_malloc(sizeof(joystick_hwdata));
         UIView *view = [[iControlPadReaderView alloc] initWithFrame:CGRectMake(0, 0, 1, 1)];
-        UIView *display = GetSharedOGLDisplayView();
+        SDL_Surface *surface = SDL_GetVideoSurface();
+        UIView *display = (UIView *)surface->userdata;
         [display performBlock:^(void) {
             // main thread
             [display addSubview:view];
@@ -90,12 +92,13 @@ SDL_SYS_JoystickOpen(SDL_Joystick * joystick)
         joystick->nbuttons = 8;
         joystick->name = iCadeName;
         joystick->hwdata = (joystick_hwdata *)SDL_malloc(sizeof(joystick_hwdata));
-        UIView *view = [[iCadeReaderView alloc] initWithFrame:CGRectMake(0, 0, 1, 1)];
-        UIView *display = GetSharedOGLDisplayView();
+        iCadeReaderView *view = [[iCadeReaderView alloc] initWithFrame:CGRectMake(0, 0, 1, 1)];
+        SDL_Surface *surface = SDL_GetVideoSurface();
+        UIView *display = (UIView *)surface->userdata;
         [display performBlock:^(void) {
             // main thread
             [display addSubview:view];
-            [view becomeFirstResponder];
+            view.active = YES;
         } afterDelay:0.0f];
         joystick->hwdata->view = view;
     } else if (joystick->index == kAccelerometer) {

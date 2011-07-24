@@ -15,6 +15,12 @@
 #include "SDL_mouse.h"
 #include "SDL_joystick.h"
 
+#ifdef __cplusplus
+/* *INDENT-OFF* */
+extern "C" {
+    /* *INDENT-ON* */
+#endif
+
 
 /* General keyboard/mouse state definitions */
 #define SDL_RELEASED	0
@@ -158,5 +164,13 @@ extern void SDL_PumpEvents(void);
 #define SDL_IGNORE	 0
 #define SDL_DISABLE	 0
 #define SDL_ENABLE	 1
+    
+/* Ends C function definitions when using C++ */
+#ifdef __cplusplus
+    /* *INDENT-OFF* */
+}
+/* *INDENT-ON* */
+#endif
+
 
 #endif

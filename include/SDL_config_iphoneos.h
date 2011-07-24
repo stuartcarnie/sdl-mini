@@ -152,4 +152,6 @@ typedef unsigned long uintptr_t;
  */
 #define SDL_IPHONE_MAX_GFORCE 5.0
 
+#define USE_CG_SURFACE	1
+
 #endif /* _SDL_config_iphoneos_h */

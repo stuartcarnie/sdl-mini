@@ -12,6 +12,14 @@
 #include "SDL_stdinc.h"
 #include "SDL_error.h"
 
+/* Set up for C function definitions, even when using C++ */
+#ifdef __cplusplus
+/* *INDENT-OFF* */
+extern "C" {
+    /* *INDENT-ON* */
+#endif
+
+
 //typedef struct SDL_Joystick {	
 //} SDL_Joystick;
 
@@ -43,5 +51,11 @@ extern Uint8 SDL_JoystickGetHat(SDL_Joystick * joystick, int hat);
 extern Uint8 SDL_JoystickGetButton(SDL_Joystick*, int);
 extern void SDL_JoystickClose(SDL_Joystick*);
 
+/* Ends C function definitions when using C++ */
+#ifdef __cplusplus
+/* *INDENT-OFF* */
+}
+/* *INDENT-ON* */
+#endif
 
 #endif
