@@ -11,7 +11,7 @@
 #import "unistd.h"
 #include "stdlib.h"
 #include "SDL.h"
-#include "AudioQueueManager.h"
+//#include "AudioQueueManager.h"
 #import "sdl_internal.h"
 #import <sys/time.h>
 #include "joystick/SDL_joystick_c.h"
@@ -69,9 +69,9 @@ int SDL_Init(int initFlags) {
 	timeval tv;
 	gettimeofday(&tv, NULL);
 	time_start = tv.tv_sec;
+    
+    SDL_VideoInit(NULL, initFlags);
 
-	// init event queue
-	SDL_EventInit();
     SDL_JoystickInit();
 	
 	return 0;
@@ -151,6 +151,8 @@ int SDL_ShowCursor(int a) {
 #pragma mark -
 #pragma mark Audio Handlers
 
+#if 0
+
 static CAudioQueueManager *g_audioQueue;
 static SDL_AudioSpec g_spec;
 
@@ -174,3 +176,4 @@ void SDL_PauseAudio(int paused) {
 	}
 }
 
+#endif

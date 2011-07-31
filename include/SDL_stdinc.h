@@ -10,6 +10,8 @@
 #ifndef _SDL_stdinc_h
 #define _SDL_stdinc_h
 
+#include "SDL_config.h"
+
 #include <sys/types.h>
 
 #include <stdio.h>
@@ -20,6 +22,12 @@
 #include <stddef.h>
 
 #include <stdint.h>
+
+/**
+ *  The number of elements in an array.
+ */
+#define SDL_arraysize(array)	(sizeof(array)/sizeof(array[0]))
+#define SDL_TABLESIZE(table)	SDL_arraysize(table)
 
 /**
  *  \name Basic data types
@@ -71,6 +79,7 @@ typedef uint64_t Uint64;
 
 
 #define SDL_malloc  malloc
+#define SDL_calloc  calloc
 #define SDL_realloc realloc
 #define SDL_free    free
 #define SDL_memset  memset

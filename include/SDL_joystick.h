@@ -31,6 +31,25 @@ extern const char * SDL_JoystickName(int device_index);
 extern SDL_Joystick* SDL_JoystickOpen(int);
 extern int SDL_JoystickNumButtons(SDL_Joystick*);
 extern void SDL_JoystickUpdate();
+    
+/**
+ *  Enable/disable joystick event polling.
+ *  
+ *  If joystick events are disabled, you must call SDL_JoystickUpdate()
+ *  yourself and check the state of the joystick when you want joystick
+ *  information.
+ *  
+ *  The state can be one of ::SDL_QUERY, ::SDL_ENABLE or ::SDL_IGNORE.
+ */
+extern DECLSPEC int SDLCALL SDL_JoystickEventState(int state);
+
+/**
+ *  Get the current state of an axis control on a joystick.
+ *  
+ *  The state is a value ranging from -32768 to 32767.
+ *  
+ *  The axis indices start at index 0.
+ */
 extern Sint16 SDL_JoystickGetAxis(SDL_Joystick*, int);
 
 /*

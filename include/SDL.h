@@ -13,6 +13,9 @@
 #include "SDL_stdinc.h"
 #include "SDL_error.h"
 #include "SDL_events.h"
+#include "SDL_mutex.h"
+#include "SDL_thread.h"
+#include "SDL_timer.h"
 #include "SDL_video.h"
 #include "SDL_compat.h"
 
@@ -35,7 +38,6 @@ extern void SDL_UnlockSurface(SDL_Surface*);
 extern void SDL_LockSurface(SDL_Surface*);
 extern void SDL_FreeSurface(SDL_Surface*);
 extern void SDL_FillRect(SDL_Surface*, void*, int);
-extern void SDL_Delay(Uint32);
 extern long int SDL_MapRGB(tagFormat*, int, int, int);
 extern int SDL_PollEvent(SDL_Event*);
 extern void SDL_VideoQuit();

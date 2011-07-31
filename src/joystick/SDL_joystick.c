@@ -6,6 +6,8 @@
 //  Copyright 2011 Manomio LLC. All rights reserved.
 //
 #include "SDL_config.h"
+
+#include "SDL_events.h"
 #include "SDL_sysjoystick.h"
 #include "SDL_joystick_c.h"
 
@@ -370,11 +372,11 @@ SDL_PrivateJoystickAxis(SDL_Joystick * joystick, Uint8 axis, Sint16 value)
         event.jaxis.which = joystick->index;
         event.jaxis.axis = axis;
         event.jaxis.value = value;
-        if ((SDL_EventOK == NULL)
-            || (*SDL_EventOK) (SDL_EventOKParam, &event)) {
+        //if ((SDL_EventOK == NULL)
+        //    || (*SDL_EventOK) (SDL_EventOKParam, &event)) {
             posted = 1;
             SDL_PushEvent(&event);
-        }
+        //}
     }
 #endif /* !SDL_EVENTS_DISABLED */
     return (posted);
@@ -397,11 +399,11 @@ SDL_PrivateJoystickHat(SDL_Joystick * joystick, Uint8 hat, Uint8 value)
         event.jhat.which = joystick->index;
         event.jhat.hat = hat;
         event.jhat.value = value;
-        if ((SDL_EventOK == NULL)
-            || (*SDL_EventOK) (SDL_EventOKParam, &event)) {
+        //if ((SDL_EventOK == NULL)
+        //    || (*SDL_EventOK) (SDL_EventOKParam, &event)) {
             posted = 1;
             SDL_PushEvent(&event);
-        }
+        //}
     }
 #endif /* !SDL_EVENTS_DISABLED */
     return (posted);
@@ -427,11 +429,11 @@ SDL_PrivateJoystickBall(SDL_Joystick * joystick, Uint8 ball,
         event.jball.ball = ball;
         event.jball.xrel = xrel;
         event.jball.yrel = yrel;
-        if ((SDL_EventOK == NULL)
-            || (*SDL_EventOK) (SDL_EventOKParam, &event)) {
+        //if ((SDL_EventOK == NULL)
+        //    || (*SDL_EventOK) (SDL_EventOKParam, &event)) {
             posted = 1;
             SDL_PushEvent(&event);
-        }
+        //}
     }
 #endif /* !SDL_EVENTS_DISABLED */
     return (posted);
@@ -467,11 +469,11 @@ SDL_PrivateJoystickButton(SDL_Joystick * joystick, Uint8 button, Uint8 state)
         event.jbutton.which = joystick->index;
         event.jbutton.button = button;
         event.jbutton.state = state;
-        if ((SDL_EventOK == NULL)
-            || (*SDL_EventOK) (SDL_EventOKParam, &event)) {
+        //if ((SDL_EventOK == NULL)
+        //    || (*SDL_EventOK) (SDL_EventOKParam, &event)) {
             posted = 1;
             SDL_PushEvent(&event);
-        }
+        //}
     }
 #endif /* !SDL_EVENTS_DISABLED */
     return (posted);
@@ -485,4 +487,36 @@ SDL_JoystickUpdate(void)
     for (i = 0; SDL_joysticks[i]; ++i) {
         SDL_SYS_JoystickUpdate(SDL_joysticks[i]);
     }
+}
+
+int
+SDL_JoystickEventState(int state)
+{
+#if SDL_EVENTS_DISABLED
+    return SDL_IGNORE;
+#else
+    const Uint32 event_list[] = {
+        SDL_JOYAXISMOTION, SDL_JOYBALLMOTION, SDL_JOYHATMOTION,
+        SDL_JOYBUTTONDOWN, SDL_JOYBUTTONUP,
+    };
+    unsigned int i;
+    
+    switch (state) {
+        case SDL_QUERY:
+            state = SDL_IGNORE;
+            for (i = 0; i < SDL_arraysize(event_list); ++i) {
+                state = SDL_EventState(event_list[i], SDL_QUERY);
+                if (state == SDL_ENABLE) {
+                    break;
+                }
+            }
+            break;
+        default:
+            for (i = 0; i < SDL_arraysize(event_list); ++i) {
+                SDL_EventState(event_list[i], state);
+            }
+            break;
+    }
+    return (state);
+#endif /* SDL_EVENTS_DISABLED */
 }

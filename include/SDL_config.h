@@ -7,6 +7,6 @@
  *
  */
 
-#define SDL_EVENTS_DISABLED 1
+#define SDL_EVENTS_DISABLED 0
 
 #include "SDL_config_iphoneos.h"

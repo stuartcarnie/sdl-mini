@@ -159,10 +159,16 @@ SDL_SYS_JoystickUpdate(SDL_Joystick * joystick)
         iCadeState state = view.iCadeState;
         
         for(int i=iCadeButtonFirst, btn=0; i <= iCadeButtonLast; i <<= 1, btn++) {
-            SDL_PrivateJoystickButton(joystick, btn, (i & state) != 0);
+            Uint8 pr = ((i & state) != 0) ? SDL_PRESSED : SDL_RELEASED;
+
+            if (joystick->buttons[btn] == pr) continue; // hasn't changed state, so don't pump and event
+            SDL_PrivateJoystickButton(joystick, btn, pr);
         }
         
-        SDL_PrivateJoystickHat(joystick, 0, state & 0x0f);
+        Uint8 hat_state = (state & 0x0f);
+        if (joystick->hats[0] != hat_state) {
+            SDL_PrivateJoystickHat(joystick, 0, hat_state);
+        }
     }
 }
 
