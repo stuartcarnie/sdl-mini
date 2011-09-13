@@ -10,6 +10,9 @@
 #include "SDL_events.h"
 #include "SDL_sysjoystick.h"
 #include "SDL_joystick_c.h"
+#if !SDL_EVENTS_DISABLED
+#include "../events/SDL_events_c.h"
+#endif
 
 Uint8 SDL_numjoysticks = 0;
 SDL_Joystick **SDL_joysticks = NULL;

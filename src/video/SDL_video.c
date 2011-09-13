@@ -41,6 +41,9 @@ SDL_VideoInit(const char *driver_name, Uint32 flags)
         return -1;
     }
 
+    /* Select the proper video driver */
+    index = 0;
+    video = NULL;
     for (i = 0; bootstrap[i]; ++i) {
         if (bootstrap[i]->available()) {
             video = bootstrap[i]->create(index);
