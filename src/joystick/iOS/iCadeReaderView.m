@@ -105,6 +105,9 @@ static const char *OFF_STATES = "eczqtrfnmpgv";
 - (void)insertText:(NSString *)text {
     
     char ch = [text characterAtIndex:0];
+    if (ch >= 65 && ch < 91)
+        ch+=32; // lowercase
+    
     char *p = strchr(ON_STATES, ch);
     bool stateChanged = false;
     if (p) {
