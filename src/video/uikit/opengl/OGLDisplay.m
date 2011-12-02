@@ -12,7 +12,7 @@
 static OGLDisplay* sharedView = NULL;
 static BOOL newFrame = NO;
 
-UIView* CreateOGLDisplayView(int width, int height) {
+UIView<DisplayViewSurface>* CreateOGLDisplayView(int width, int height) {
 	return [[OGLDisplay alloc] initWithFrame:CGRectMake(0, 0, width, height) displaySize:CGSizeMake(width, height)];
 }
 

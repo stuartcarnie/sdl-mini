@@ -52,7 +52,7 @@ void UpdateOGLScreen();
 #ifdef __cplusplus
 extern "C" 
 #endif
-UIView* CreateOGLDisplayView(int width, int height);
+UIView<DisplayViewSurface>* CreateOGLDisplayView(int width, int height);
 
 #ifdef __cplusplus
 extern "C"
